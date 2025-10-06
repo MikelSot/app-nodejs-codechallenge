@@ -30,53 +30,62 @@ Every transaction with a value greater than 1000 should be rejected.
     Transaction -- Update transaction Status event--> transactionDatabase[(Database)]
 ```
 
-# Tech Stack
+---
 
-<ol>
-  <li>Node. You can use any framework you want (i.e. Nestjs with an ORM like TypeOrm or Prisma) </li>
-  <li>Any database</li>
-  <li>Kafka</li>    
-</ol>
+# ⚙️ Solution diagram
 
-We do provide a `Dockerfile` to help you get started with a dev environment.
+![solution diagram](./assets/solution_diagram.png)
 
-You must have two resources:
+# 📚 List of operations
 
-1. Resource to create a transaction that must containt:
+The endpoint documentation is located in the `docs` folder.
+The documentation is written in **OpenAPI** format with Swagger.
 
-```json
-{
-  "accountExternalIdDebit": "Guid",
-  "accountExternalIdCredit": "Guid",
-  "tranferTypeId": 1,
-  "value": 120
-}
+| Method | Path                                  | Description        | Destination          |
+|:-------|---------------------------------------|--------------------|----------------------|
+| POST   | /transactions                         | Create Transaction | transaction          |
+| GET    | /transactions/{transactionExternalId} | View Transaction   | transaction -> cache |
+
+# 📦 Microservices architecture
+
+The architecture used in the services is **DDD** (Domain-Driven Design), whose main focus is to place the business domain at the center of the design. 
+
+```
+src/
+├── transaction/                      
+│   ├── domain/                    
+│   │   ├── entities/              
+│   │   ├── value-objects/       
+│   │   ├── repositories/       
+│   │   ├── services/    
+│   │   ├── events/              
+│   │   └── exceptions/    
+│   ├── application/          
+│   │   ├── use-cases/         
+│   │   ├── usecase/  
+│   └── infrastructure/          
+│       ├── persistence/      
+│       └── subscriber/   
+├── shared/                  
+│   ├── domain/
+│   │   ├── value-objects/
+│   │   │   ├── Uuid.ts          
+│   ├── infrastructure/
+│   └── application/│
+├── docs/                              
+├── tests/                          
+└── app.ts                            
 ```
 
-2. Resource to retrieve a transaction
+# 🧩 Future Improvements and Technical Considerations
 
-```json
-{
-  "transactionExternalId": "Guid",
-  "transactionType": {
-    "name": ""
-  },
-  "transactionStatus": {
-    "name": ""
-  },
-  "value": 120,
-  "createdAt": "Date"
-}
-```
+During the challenge, priority was given to delivering a functional solution,
+but there are several aspects that could be improved to make the solution more robust and resilient:
+- **Idempotence:** Avoid transaction duplication in case of retries or failures.
+- **Outbox Pattern:** Add this pattern to ensure consistency between the database and the messaging system.
+- **Saga Pattern:** Add this pattern to handle distributed transactions and ensure eventual consistency (reversing failed operations).
+- **Secret Management:** Use a secret manager to handle credentials.
+- **DLQ Reprocessing:** Implement a job or manual process that reprocesses messages.
+- **Testing:** Add unit and integration tests to ensure code quality.
+- **Monitoring:** Implement monitoring tools to track application performance.
 
-## Optional
-
-You can use any approach to store transaction data but you should consider that we may deal with high volume scenarios where we have a huge amount of writes and reads for the same data at the same time. How would you tackle this requirement?
-
-You can use Graphql;
-
-# Send us your challenge
-
-When you finish your challenge, after forking a repository, you **must** open a pull request to our repository. There are no limitations to the implementation, you can follow the programming paradigm, modularization, and style that you feel is the most appropriate solution.
-
-If you have any questions, please let us know.
