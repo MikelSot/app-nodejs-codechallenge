@@ -5,8 +5,6 @@ Our code challenge will let you marvel us with your Jedi coding skills :smile:.
 Don't forget that the proper way to submit your work is to fork the repo and create a PR :wink: ... have fun !!
 
 - [Problem](#problem)
-- [Tech Stack](#tech_stack)
-- [Send us your challenge](#send_us_your_challenge)
 
 # Problem
 
@@ -51,8 +49,8 @@ The documentation is written in **OpenAPI** format with Swagger.
 The architecture used in the services is **DDD** (Domain-Driven Design), whose main focus is to place the business domain at the center of the design. 
 
 ```
-src/
-├── transaction/                      
+transaction/
+├── src/                      
 │   ├── domain/                    
 │   │   ├── entities/              
 │   │   ├── value-objects/       
@@ -63,18 +61,18 @@ src/
 │   ├── application/          
 │   │   ├── use-cases/         
 │   │   ├── usecase/  
-│   └── infrastructure/          
-│       ├── persistence/      
-│       └── subscriber/   
-├── shared/                  
-│   ├── domain/
-│   │   ├── value-objects/
-│   │   │   ├── Uuid.ts          
-│   ├── infrastructure/
-│   └── application/│
-├── docs/                              
-├── tests/                          
-└── app.ts                            
+│   ├── infrastructure/          
+│   │   ├── persistence/      
+│   │   └── subscriber/   
+│   ├──  index.ts
+│   ├── presentation/                  
+│   └── shared/                  
+│       ├── domain/
+│       │   ├── value-objects/
+│       │   │   ├── Uuid.ts          
+│       ├── infrastructure/
+│       └── application/│                                                     
+└── docs/                                                    
 ```
 
 # 🧩 Future Improvements and Technical Considerations

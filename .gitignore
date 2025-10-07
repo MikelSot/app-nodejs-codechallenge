@@ -104,3 +104,7 @@ dist
 .tern-port
 
 .idea
+./transaction/node_modules
+./transaction/dist
+./anti-fraud/node_modules
+./anti-fraud/dist

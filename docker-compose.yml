@@ -1,17 +1,27 @@
 version: "3.7"
 services:
-  postgres:
+  yape-postgres:
     image: postgres:14
     ports:
       - "5432:5432"
+    env_file:
+      - .env
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - yape-challenge-data:/var/lib/postgresql/data
+      - './transaction/src/bootstrap/init.sql:/docker-entrypoint-initdb.d/init.sql'
+    networks:
+      - yape-challenge-network
   zookeeper:
     image: confluentinc/cp-zookeeper:5.5.3
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-  kafka:
+    networks:
+      - yape-challenge-network
+  yape-kafka:
     image: confluentinc/cp-enterprise-kafka:5.5.3
     depends_on: [zookeeper]
     environment:
@@ -23,3 +33,55 @@ services:
       KAFKA_JMX_PORT: 9991
     ports:
       - 9092:9092
+    networks:
+      - yape-challenge-network
+
+  yape-redis:
+    image: "redis:alpine"
+    container_name: yape-redis
+    ports:
+      - "6379:6379"
+    env_file:
+      - .env
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - yape-challenge-network
+
+  yape-transaction:
+    build:
+      context: ./transaction
+      dockerfile: Dockerfile
+      target: production
+    container_name: yape-transaction
+    depends_on: [yape-postgres, yape-redis, yape-kafka]
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - yape-challenge-network
+
+  yape-anti-fraud:
+    build:
+      context: ./anti-fraud
+      dockerfile: Dockerfile
+      target: production
+    container_name: yape-anti-fraud
+    depends_on: [yape-kafka]
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3001:3001"
+    networks:
+      - yape-challenge-network
+
+networks:
+  yape-challenge-network:
+    name: yape-challenge-network
+
+volumes:
+  yape-challenge-data:
+
