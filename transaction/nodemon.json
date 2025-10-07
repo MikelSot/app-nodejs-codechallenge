@@ -1,0 +1,15 @@
+{
+  "watch": ["src"],
+  "ext": ".ts",
+  "ignore": ["dist"],
+  "exec": "ts-node -r tsconfig-paths/register src/index.ts",
+  "env": {
+    "ENV": "development",
+    "HOST": "0.0.0.0",
+    "PORT": 3000,
+    "DB_URL": "mongodb://userLigo:H5urMHtqrU5DNlwM@cluster0-shard-00-00.pxaip.gcp.mongodb.net:27017,cluster0-shard-00-01.pxaip.gcp.mongodb.net:27017,cluster0-shard-00-02.pxaip.gcp.mongodb.net:27017/dbLigo?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority",
+    "DB_NAME": "dbLaMagica",
+    "RATE_LIMIT_QTY_MAX_CONNECTIONS": 100,
+    "RATE_LIMIT_TIME_WINDOW_MINUTES": 3
+  }
+}

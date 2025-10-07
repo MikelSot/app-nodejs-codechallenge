@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "incremental": false,
+    "target": "ES2020",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "inlineSourceMap": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "traceResolution": false,
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "pretty": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "application/*": ["application/*"],
+      "bootstrap/*": ["bootstrap/*"],
+      "domain/*": ["domain/*"],
+      "infrastructure/*": ["infrastructure/*"],
+      "presentation/*": ["presentation/*"],
+      "shared/*": ["shared/*"],
+      "test/*": ["test/*"]
+    },
+    "lib": ["ES2020", "DOM"]
+  },
+  "include": ["src/**/*.ts", "src/shared/config/env.d.ts"],
+  "exclude": ["node_modules/**/*"],
+  "compileOnSave": false
+}

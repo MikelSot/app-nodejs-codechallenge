@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.gitignore
+.env.example
+.env
+.git
+.idea
+*.test.ts
