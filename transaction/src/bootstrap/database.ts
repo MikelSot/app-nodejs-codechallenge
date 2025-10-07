@@ -18,7 +18,7 @@ const dataSource = new DataSource({
 	},
 })
 
-export const db = async ()  => {
+export const db = async () => {
 	try {
 		await dataSource.initialize()
 		console.log('Database connection')
