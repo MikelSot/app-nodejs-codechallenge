@@ -1,5 +1,4 @@
 class Transaction {
-	id: string
 	transactionExternalId: string
 	accountExternalIdDebit: string
 	accountExternalIdCredit: string
@@ -7,10 +6,9 @@ class Transaction {
 	value: number
 	status: string
 	createdAt: Date
-	updatedAt: Date
+	updatedAt?: Date
 
 	constructor(data: Transaction) {
-		this.id = data.id
 		this.transactionExternalId = data.transactionExternalId
 		this.accountExternalIdDebit = data.accountExternalIdDebit
 		this.accountExternalIdCredit = data.accountExternalIdCredit

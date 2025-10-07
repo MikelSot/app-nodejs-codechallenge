@@ -1,6 +1,5 @@
 CREATE TABLE transactions
 (
-    id                         BIGSERIAL PRIMARY KEY,
     transaction_external_id    UUID UNIQUE,
     account_external_id_debit  UUID           NOT NULL,
     account_external_id_credit UUID           NOT NULL,

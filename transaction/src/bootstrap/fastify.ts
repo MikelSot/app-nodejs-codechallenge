@@ -1,3 +1,4 @@
+import 'fastify'
 import fastifyCompress from '@fastify/compress'
 import fastifyCors from '@fastify/cors'
 import fastifyFormBody from '@fastify/formbody'
@@ -8,6 +9,19 @@ import type { LoggerOptions } from 'pino'
 
 import config from 'bootstrap/config'
 import type Trace from 'shared/infrastructure/trace/trace'
+
+declare module 'fastify' {
+	interface FastifyContextConfig {
+		tags?: string[]
+		summary?: string
+		description?: string
+		operationId?: string
+		deprecated?: boolean
+		security?: Array<{ [key: string]: string[] }>
+		produces?: string[]
+		consumes?: string[]
+	}
+}
 
 async function httpServer(trace: Trace): Promise<FastifyInstance> {
 	const app = fastify({

@@ -11,7 +11,10 @@ const fastifySwagger = async ({ app }: AppContext) => {
 				description: 'Documentación de la API',
 				version: '1.0.0',
 			},
-			servers: [{ url: 'http://localhost:3001' }],
+			servers: [
+				{ url: 'http://localhost:3000' },
+				{ url: 'http://localhost:3001' },
+			],
 			tags: [
 				{ name: 'transactions', description: 'Operaciones con transacciones' },
 			],

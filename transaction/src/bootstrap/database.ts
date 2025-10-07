@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 
-import { Transaction } from 'infrastructure/postgres/entity/transaction'
+import Transaction from 'infrastructure/postgres/entity/transaction'
 
-const dataSource = new DataSource({
+const db = new DataSource({
 	type: 'postgres',
 	host: process.env.DB_HOST || 'localhost',
 	port: Number.parseInt(process.env.DB_PORT || '5432'),
@@ -18,9 +18,9 @@ const dataSource = new DataSource({
 	},
 })
 
-export const db = async () => {
+export const newDb = async () => {
 	try {
-		await dataSource.initialize()
+		await db.initialize()
 		console.log('Database connection')
 	} catch (error) {
 		console.error('Database connection failed:', error)

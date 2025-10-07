@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, UpdateDateColumn } from 'typeorm'
 
 @Entity('transactions')
-export class Transaction {
+class TransactionEntity {
 	@Column({
 		type: 'uuid',
 		name: 'transaction_external_id',
@@ -50,5 +50,7 @@ export class Transaction {
 		name: 'updated_at',
 		type: 'timestamp',
 	})
-	updatedAt!: Date
+	updatedAt?: Date
 }
+
+export default TransactionEntity

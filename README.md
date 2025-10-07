@@ -35,8 +35,7 @@ Every transaction with a value greater than 1000 should be rejected.
 ![solution diagram](./assets/solution_diagram.png)
 
 # 📚 List of operations
-
-The endpoint documentation is located in the `docs` folder.
+The endpoint documentation is located in the `/docs` path. 
 The documentation is written in **OpenAPI** format with Swagger.
 
 | Method | Path                                  | Description        | Destination          |
@@ -44,9 +43,19 @@ The documentation is written in **OpenAPI** format with Swagger.
 | POST   | /transactions                         | Create Transaction | transaction          |
 | GET    | /transactions/{transactionExternalId} | View Transaction   | transaction -> cache |
 
+# 🔧 TECH STACK:
+- Node.js 22 
+- fastify + TypeScript
+- Type ORM + PostgreSQL
+- Apache Kafka + Zookeeper
+- Docker + Docker Compose
+- Redis
+
 # 📦 Microservices architecture
 
-The architecture used in the services is **DDD** (Domain-Driven Design), whose main focus is to place the business domain at the center of the design. 
+The architecture used in the services is **DDD** (Domain-Driven Design), whose main focus is to place the business domain at the center of the design.
+
+In addition to this architecture, best practices such as SOLID principles, CQRS, Circuit Breaker, etc. are applied in the code.
 
 ```
 transaction/
@@ -77,8 +86,9 @@ transaction/
 
 # 🧩 Future Improvements and Technical Considerations
 
-During the challenge, priority was given to delivering a functional solution,
-but there are several aspects that could be improved to make the solution more robust and resilient:
+Since no response was received to the questions sent by email, priority was given to delivering a functional solution during the challenge.
+However, there are several aspects that could be improved to make the solution more robust and resilient:
+
 - **Idempotence:** Avoid transaction duplication in case of retries or failures.
 - **Outbox Pattern:** Add this pattern to ensure consistency between the database and the messaging system.
 - **Saga Pattern:** Add this pattern to handle distributed transactions and ensure eventual consistency (reversing failed operations).
