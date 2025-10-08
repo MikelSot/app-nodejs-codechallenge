@@ -8,6 +8,8 @@ import type PublisherEvent from 'domain/event/publisher.event'
 import type { TransactionRepository } from 'domain/repositories/transaction.repository'
 import type CacheService from 'domain/service/cache.service'
 import { logger } from 'shared/infrastructure/logger'
+import { ErrorResponse } from 'shared/infrastructure/response/error'
+import { HTTP_STATUS } from 'shared/infrastructure/response/status'
 
 class TransactionUseCase {
 	constructor(
@@ -58,10 +60,10 @@ class TransactionUseCase {
 
 			await this.dlq.publish(TOPICS.DLQ, event)
 
-			throw {
-				message: 'Error creating transaction',
-				status: 503,
-			}
+			throw new ErrorResponse(
+				'Error creating transaction',
+				HTTP_STATUS.SERVICE_UNAVAILABLE,
+			)
 		}
 	}
 
@@ -107,7 +109,7 @@ class TransactionUseCase {
 
 		const transaction = await this.transaction.findById(id)
 		if (!transaction) {
-			return null
+			throw new ErrorResponse('Transaction not found', HTTP_STATUS.NOT_FOUND)
 		}
 
 		await this.cache.set(`tx::${id}`, JSON.stringify(transaction), 43200)

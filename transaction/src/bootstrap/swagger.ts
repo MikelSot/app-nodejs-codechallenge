@@ -1,5 +1,6 @@
 import swagger from '@fastify/swagger'
 import swaggerUI from '@fastify/swagger-ui'
+import { createJsonSchemaTransform } from 'fastify-type-provider-zod'
 
 import type AppContext from 'bootstrap/app-context'
 
@@ -19,6 +20,7 @@ const fastifySwagger = async ({ app }: AppContext) => {
 				{ name: 'transactions', description: 'Operaciones con transacciones' },
 			],
 		},
+		transform: createJsonSchemaTransform({}),
 	})
 
 	await app.register(swaggerUI, {

@@ -19,20 +19,20 @@ For now, we have only three transaction statuses:
 
 Every transaction with a value greater than 1000 should be rejected.
 
-```mermaid
-  flowchart LR
-    Transaction -- Save Transaction with pending Status --> transactionDatabase[(Database)]
-    Transaction --Send transaction Created event--> Anti-Fraud
-    Anti-Fraud -- Send transaction Status Approved event--> Transaction
-    Anti-Fraud -- Send transaction Status Rejected event--> Transaction
-    Transaction -- Update transaction Status event--> transactionDatabase[(Database)]
-```
-
 ---
 
 # ⚙️ Solution diagram
 
 ![solution diagram](./assets/solution_diagram.png)
+
+# 🛠️ How to Deploy
+
+Run the following command:
+```shell
+docker-compose up -d
+```
+
+
 
 # 📚 List of operations
 The endpoint documentation is located in the `/docs` path. 

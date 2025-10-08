@@ -5,6 +5,11 @@ import fastifyFormBody from '@fastify/formbody'
 import fastifyHelmet from '@fastify/helmet'
 import fastifyRateLimit from '@fastify/rate-limit'
 import fastify, { type FastifyInstance } from 'fastify'
+import {
+	type ZodTypeProvider,
+	serializerCompiler,
+	validatorCompiler,
+} from 'fastify-type-provider-zod'
 import type { LoggerOptions } from 'pino'
 
 import config from 'bootstrap/config'
@@ -28,7 +33,10 @@ async function httpServer(trace: Trace): Promise<FastifyInstance> {
 		logger: loggerConfig[config.env] ?? true,
 		ignoreTrailingSlash: true,
 		trustProxy: true,
-	})
+	}).withTypeProvider<ZodTypeProvider>()
+
+	app.setValidatorCompiler(validatorCompiler)
+	app.setSerializerCompiler(serializerCompiler)
 
 	app.addHook('onRequest', (request, _reply, done) => {
 		const traceId = request.headers['x-trace-id'] as string
