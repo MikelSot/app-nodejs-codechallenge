@@ -1,5 +1,6 @@
 CREATE TABLE transactions
 (
+    id BIGSERIAL PRIMARY KEY,
     transaction_external_id    UUID UNIQUE,
     account_external_id_debit  UUID           NOT NULL,
     account_external_id_credit UUID           NOT NULL,
@@ -7,7 +8,7 @@ CREATE TABLE transactions
     value                      DECIMAL(15, 2) NOT NULL,
     status                     VARCHAR(20),
     created_at                 TIMESTAMP ,
-    updated_at                 TIMESTAMP ,
+    updated_at                 TIMESTAMP
 );
 
 CREATE INDEX transactions_external_id_idx ON transactions (transaction_external_id);

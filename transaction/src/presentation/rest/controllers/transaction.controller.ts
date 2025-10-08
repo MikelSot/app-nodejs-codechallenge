@@ -1,12 +1,17 @@
 import type TransactionCommand from 'application/command/transaction.command'
 import type TransactionUseCase from 'application/usecases/transaction.usecase'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { InternalServerErrorResponse } from 'shared/infrastructure/response/error'
+import TransactionMapper from 'presentation/rest/mapper/transaction.mapper'
+import {
+	ErrorResponse,
+	InternalServerErrorResponse,
+} from 'shared/infrastructure/response/error'
 import {
 	ServerResponse,
 	SuccessCreatedResponse,
 	SuccessResponse,
 } from 'shared/infrastructure/response/response'
+import { HTTP_STATUS } from 'shared/infrastructure/response/status'
 
 class TransactionController {
 	constructor(private readonly useCase: TransactionUseCase) {}
@@ -17,7 +22,9 @@ class TransactionController {
 
 			const transaction = await this.useCase.create(payload)
 
-			const response = new SuccessCreatedResponse(transaction)
+			const response = new SuccessCreatedResponse(
+				TransactionMapper.toResponse(transaction),
+			)
 
 			return reply.status(response.code).send(response)
 		} catch (error) {
@@ -35,7 +42,18 @@ class TransactionController {
 			}
 
 			const transaction = await this.useCase.findById(id)
-			const response = new SuccessResponse(transaction)
+			if (!transaction) {
+				const response = new ErrorResponse(
+					'Transaction not found',
+					HTTP_STATUS.NOT_FOUND,
+				)
+
+				return reply.status(response.code).send(response)
+			}
+
+			const response = new SuccessResponse(
+				TransactionMapper.toResponse(transaction),
+			)
 
 			return reply.status(response.code).send(response)
 		} catch (error) {

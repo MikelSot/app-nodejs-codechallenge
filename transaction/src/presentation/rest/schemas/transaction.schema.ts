@@ -28,13 +28,19 @@ export const findTransactionSchema = z.object({
 })
 
 export const transactionResponseSchema = z.object({
-	transactionExternalId: z.uuidv4(),
-	accountExternalIdDebit: z.uuidv4(),
-	accountExternalIdCredit: z.uuidv4(),
-	transferTypeId: z.number().int(),
-	value: z.number(),
-	status: z.enum(['pending', 'completed', 'failed']),
-	createdAt: z.date(),
+	code: z.number().int().describe('HTTP status code'),
+	message: z.string().describe('Response message'),
+	data: z.object({
+		transactionExternalId: z.uuidv4(),
+		transactionType: z.object({
+			name: z.string(),
+		}),
+		transactionStatus: z.object({
+			name: z.enum(['pending', 'approved', 'rejected']),
+		}),
+		value: z.number(),
+		createdAt: z.date(),
+	}),
 })
 
 export const errorSchema = z.object({

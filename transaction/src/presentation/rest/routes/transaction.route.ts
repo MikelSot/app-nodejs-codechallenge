@@ -10,6 +10,7 @@ import {
 	type FindTransactionSchema,
 	createTransactionSchema,
 	errorSchema,
+	findTransactionSchema,
 	transactionResponseSchema,
 } from 'presentation/rest/schemas/transaction.schema'
 
@@ -66,7 +67,7 @@ async function publicTransactionRoute(
 				preHandler: middlewares,
 				schema: {
 					description: 'Get details transaction by its external ID',
-					body: createTransactionSchema,
+					params: findTransactionSchema,
 					tags: ['transactions'],
 					response: {
 						200: transactionResponseSchema,

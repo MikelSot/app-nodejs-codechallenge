@@ -108,3 +108,4 @@ dist
 ./transaction/dist
 ./anti-fraud/node_modules
 ./anti-fraud/dist
+.data

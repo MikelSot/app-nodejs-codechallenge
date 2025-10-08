@@ -1,7 +1,16 @@
-import { Column, CreateDateColumn, Entity, UpdateDateColumn } from 'typeorm'
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm'
 
 @Entity('transactions')
 class TransactionEntity {
+	@PrimaryGeneratedColumn()
+	id?: number
+
 	@Column({
 		type: 'uuid',
 		name: 'transaction_external_id',

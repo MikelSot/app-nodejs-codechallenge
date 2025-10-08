@@ -44,7 +44,7 @@ async function httpServer(trace: Trace): Promise<FastifyInstance> {
 	})
 
 	await app.register(fastifyCors, {
-		origin: false,
+		origin: true,
 	})
 	await app.register(fastifyCompress, {
 		encodings: ['gzip', 'deflate'],

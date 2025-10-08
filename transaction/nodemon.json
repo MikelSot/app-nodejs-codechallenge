@@ -7,12 +7,18 @@
     "ENV": "development",
     "HOST": "0.0.0.0",
     "PORT": 3000,
-    "DB_HOST": "yape-postgres",
+    "RATE_LIMIT_QTY_MAX_CONNECTIONS": 100,
+    "RATE_LIMIT_TIME_WINDOW_MINUTES": 3,
+    "DB_HOST": "localhost",
     "DB_USERNAME": "yape",
     "DB_PASSWORD": "secret",
     "DB_NAME": "transaction",
     "DB_PORT": "5432",
-    "RATE_LIMIT_QTY_MAX_CONNECTIONS": 100,
-    "RATE_LIMIT_TIME_WINDOW_MINUTES": 3
+    "REDIS_HOST": "localhost",
+    "REDIS_PORT": 6379,
+    "REDIS_PASSWORD": "secret",
+    "KAFKA_BROKERS": "localhost:9092",
+    "KAFKA_CLIENT_ID": "transaction-service",
+    "KAFKA_GROUP_ID": "transaction-group"
   }
 }
