@@ -1,16 +1,17 @@
 import { Kafka, logLevel } from 'kafkajs'
 
-export const kafka = new Kafka({
-	clientId: process.env.KAFKA_CLIENT_ID || 'transaction',
-	brokers: (process.env.KAFKA_BROKERS || 'localhost:9092').split(','),
-	logLevel: logLevel.INFO,
-	retry: {
-		initialRetryTime: 300,
-		retries: 3,
-		maxRetryTime: 30000,
-		multiplier: 2,
-	},
-})
+export const newKafka = () =>
+	new Kafka({
+		clientId: process.env.KAFKA_CLIENT_ID || 'transaction',
+		brokers: (process.env.KAFKA_BROKERS || 'localhost:9092').split(','),
+		logLevel: logLevel.INFO,
+		retry: {
+			initialRetryTime: 300,
+			retries: 3,
+			maxRetryTime: 30000,
+			multiplier: 2,
+		},
+	})
 
 export const TOPICS = {
 	TRANSACTIONS: 'transactions',
@@ -18,7 +19,7 @@ export const TOPICS = {
 }
 
 export const createTopics = async () => {
-	const admin = kafka.admin()
+	const admin = newKafka().admin()
 
 	try {
 		await admin.connect()

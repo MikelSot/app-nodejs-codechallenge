@@ -1,7 +1,5 @@
 import TransactionUseCase from 'application/usecases/transaction.usecase'
 import type AppContext from 'bootstrap/app-context'
-import { kafka } from 'bootstrap/kafka'
-import redis from 'bootstrap/redis'
 import type { FastifyInstance, preHandlerHookHandler } from 'fastify'
 import PublisherKafka from 'infrastructure/kafka/publisher.kafka'
 import TransactionPostgres from 'infrastructure/postgres/transaction.postgres'
@@ -26,6 +24,8 @@ async function transactionRoute(context: AppContext) {
 }
 
 async function buildTransactionController(context: AppContext) {
+	const { redis, kafka } = context
+
 	const db = new TransactionPostgres()
 	const cache = new RedisCache(redis)
 	const publisher = await PublisherKafka.new(context, kafka)
