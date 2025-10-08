@@ -38,10 +38,10 @@ docker-compose up -d
 The endpoint documentation is located in the `/docs` path. 
 The documentation is written in **OpenAPI** format with Swagger.
 
-| Method | Path                                  | Description        | Destination          |
-|:-------|---------------------------------------|--------------------|----------------------|
-| POST   | /transactions                         | Create Transaction | transaction          |
-| GET    | /transactions/{transactionExternalId} | View Transaction   | transaction -> cache |
+| Method | Path                                     | Description        | Destination          |
+|:-------|------------------------------------------|--------------------|----------------------|
+| POST   | /v1/transactions                         | Create Transaction | transaction          |
+| GET    | /v1/transactions/{transactionExternalId} | View Transaction   | transaction -> cache |
 
 # 🔧 TECH STACK:
 - Node.js 22 

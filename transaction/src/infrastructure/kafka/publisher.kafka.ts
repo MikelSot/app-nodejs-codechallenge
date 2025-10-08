@@ -14,7 +14,7 @@ class PublisherKafka implements PublisherEvent {
 		this.producer = kafka.producer()
 	}
 
-	static async new(kafka: Kafka, context: AppContext): Promise<PublisherKafka> {
+	static async new(context: AppContext, kafka: Kafka): Promise<PublisherKafka> {
 		const publisher = new PublisherKafka(kafka, context)
 		await publisher.producer.connect()
 
