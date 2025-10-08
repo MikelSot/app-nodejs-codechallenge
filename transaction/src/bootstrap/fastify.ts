@@ -45,10 +45,13 @@ async function httpServer(trace: Trace): Promise<FastifyInstance> {
 
 	await app.register(fastifyCors, {
 		origin: true,
+		credentials: true,
 	})
+
 	await app.register(fastifyCompress, {
 		encodings: ['gzip', 'deflate'],
 	})
+
 	await app.register(fastifyHelmet, { contentSecurityPolicy: false })
 	await app.register(fastifyFormBody)
 

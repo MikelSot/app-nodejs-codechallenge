@@ -26,7 +26,7 @@ const fastifySwagger = async ({ app }: AppContext) => {
 			docExpansion: 'full',
 			deepLinking: true,
 		},
-		staticCSP: true,
+		staticCSP: false,
 	})
 
 	app.log.info('Swagger UI available at /docs')
