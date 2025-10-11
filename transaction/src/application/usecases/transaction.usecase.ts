@@ -67,10 +67,21 @@ class TransactionUseCase {
 		}
 	}
 
-	async update(id: string, status: 'approved' | 'rejected'): Promise<void> {
-		const tx = await this.transaction.findById(id)
+	async update(id: string, status: string): Promise<void> {
+		if (!['approved', 'rejected'].includes(status)) {
+			logger.error({
+				class: 'TransactionUseCase',
+				function: 'update',
+				msg: `Invalid status: ${status}`,
+				traceId: this.context.trace.id(),
+			})
+
+			return
+		}
+
+		const tx = await this.findById(id)
 		if (!tx) {
-			throw new Error('Transaction not found')
+			throw new ErrorResponse('Transaction not found', HTTP_STATUS.NOT_FOUND)
 		}
 
 		if (status === 'approved') {

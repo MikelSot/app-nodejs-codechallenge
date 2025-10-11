@@ -5,6 +5,10 @@ interface SubscriberEvent {
 		topic: string,
 		handler: (event: Event) => Promise<void>,
 	): Promise<void>
+
+	start(): Promise<void>
+
+	stop(): Promise<void>
 }
 
 export default SubscriberEvent

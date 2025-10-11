@@ -25,7 +25,7 @@ class PublisherKafka implements PublisherEvent {
 		const message = {
 			key: event.id,
 			value: JSON.stringify(event),
-			headers: { eventType: event.type },
+			headers: { eventType: event.type, traceId: this.context.trace.id() },
 		}
 
 		await this.producer.send({
